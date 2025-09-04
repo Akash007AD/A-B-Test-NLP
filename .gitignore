@@ -1,0 +1,47 @@
+--- General ---
+Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+Ignore IDE-specific folders
+.vscode/
+.idea/
+
+--- Frontend (React + Vite) ---
+Dependencies folder (recreated with npm install)
+frontend/node_modules
+
+Build output folder (recreated with npm run build)
+frontend/dist
+
+Vite cache directory
+frontend/.vite
+
+Environment variables - VERY IMPORTANT to keep secrets safe
+This will ignore .env, .env.local, .env.production, etc. in the frontend folder
+frontend/.env*
+
+A specific rule for .env.local in the root, just in case
+.env.local
+
+Log files
+npm-debug.log*
+yarn-error.log
+yarn-debug.log
+
+--- Backend (Python + FastAPI) ---
+Python virtual environment folder
+backend/venv
+
+Python cache files
+backend/pycache/
+*.pyc
+
+Generated data file from your backend.
+You can comment this out if you want to commit the final CSV results to GitHub.
+backend/quiz_results.csv
+/tmp/quiz_results.csv
+
+--- Deployment ---
+Vercel deployment output folder
+.vercel
