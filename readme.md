@@ -1,118 +1,160 @@
-A/B Test: Visual vs. Text-Based Learning for Newton's Laws
-This project is a full-stack web application built to conduct a rigorous A/B test comparing the effectiveness of two different educational formats for teaching Newton's Laws of Motion.
+# 📊 A/B Test: Visual vs. Text-Based Learning for Newton's Laws
 
-Live Demo: https://a-b-test-nlp.vercel.app/
+This project is a **full-stack web application** designed to conduct a rigorous A/B test comparing the effectiveness of **visual infographics** vs. **text-based explanations** in teaching Newton's Laws of Motion.
 
-🏆 Final Results & Conclusion
-The A/B test was conducted with 48 participants and yielded a statistically significant result, providing a clear winner.
+🔗 **Live Demo:** [https://a-b-test-nlp.vercel.app/](https://a-b-test-nlp.vercel.app/)
 
-Group (Learning Format)
+---
 
-Number of Participants
+## 🏆 Final Results & Conclusion
 
-Average Quiz Score (out of 4)
+The experiment involved **48 participants** and produced statistically significant results.
 
-Visual (Treatment)
+| Group (Learning Format) | Participants | Avg. Quiz Score (out of 4) |
+| ----------------------- | ------------ | -------------------------- |
+| **Visual (Treatment)**  | 24           | 3.14                       |
+| **Text (Control)**      | 24           | 2.82                       |
 
-24
+**Conclusion:**
 
-3.14
+* The **visual learning format** led to an **11.3% improvement** in quiz scores.
+* ✅ We **reject the null hypothesis** and conclude that, for this topic, **visual infographics are more effective** than text explanations.
 
-Text (Control)
+---
 
-24
+## 🧪 Experiment Design
 
-2.82
+* **Hypothesis (H₁):** A visual infographic will improve comprehension and quiz performance compared to text-based explanations.
+* **Null Hypothesis (H₀):** There will be no significant difference in mean quiz scores.
 
-Conclusion: The visual learning format led to a significant 11.3% improvement in quiz scores. We reject the null hypothesis and conclude that for this topic, the visual infographic is a more effective teaching method than the traditional text-based explanation.
+**Setup:**
 
-🧪 The A/B Test
-Hypothesis: A visual infographic will lead to higher comprehension and better quiz scores than a standard text-based explanation. The null hypothesis (H_0) is that there will be no significant difference in the mean quiz scores.
+* **Control (Group A):** Newton's Laws presented as plain text.
+* **Treatment (Group B):** Newton's Laws presented using an infographic.
+* **Outcome Metric:** Quiz score (4 multiple-choice questions).
 
-Control (Group A): A webpage presenting Newton's Laws in plain text.
+---
 
-Treatment (Group B): A webpage presenting the same concepts using an infographic.
+## 🛠️ Tech Stack
 
-Outcome Metric: The user's score on a 4-question quiz.
+* **Frontend:** React (Vite)
+* **Backend:** FastAPI (Python)
+* **Analytics & A/B Testing:** PostHog (event tracking & analysis)
+* **Deployment:** Vercel
 
-🛠️ Tech Stack
-Frontend: React (bootstrapped with Vite)
+---
 
-Backend: FastAPI (Python)
+## 📁 Project Structure
 
-Analytics & A/B Testing: PostHog for event tracking and analysis.
+```
+./
+├── frontend/   # React application (user interface)
+└── backend/    # FastAPI server (data logging API)
+```
 
-Deployment: Vercel
+---
 
-📁 Project Structure
-This project is a monorepo containing both the frontend and backend applications.
+## 🚀 Running Locally
 
-./frontend/: Contains the React application that users interact with.
+### Prerequisites
 
-./backend/: Contains the simple FastAPI data-logging API.
+* [Node.js](https://nodejs.org/) & npm
+* [Python](https://www.python.org/) & pip
 
-🚀 Running Locally
-Prerequisites
-Node.js and npm
+### 1. Backend Setup
 
-Python and pip
-
-1. Backend Setup
-# Navigate to the backend directory
+```bash
+# Navigate to backend
 cd backend
 
-# Create and activate a Python virtual environment
+# Create & activate virtual environment
 python -m venv venv
-# On macOS/Linux: source venv/bin/activate
-# On Windows: .\\venv\\Scripts\\activate
+# macOS/Linux: source venv/bin/activate
+# Windows: .\venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Start the server
+# Start server
 uvicorn main:app --reload
+```
 
-The backend will run on http://127.0.0.1:8000.
+Backend runs on: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
-2. Frontend Setup
-# Navigate to the frontend directory
+---
+
+### 2. Frontend Setup
+
+```bash
+# Navigate to frontend
 cd frontend
 
 # Install dependencies
 npm install
 
-# Create a local environment file named .env.local and add your PostHog keys:
-# VITE_POSTHOG_KEY=phc_YourProjectApiKey
-# VITE_POSTHOG_HOST=[https://your-host-url.i.posthog.com](https://your-host-url.i.posthog.com)
+# Create .env.local file with PostHog credentials
+VITE_POSTHOG_KEY=phc_YourProjectApiKey
+VITE_POSTHOG_HOST=https://your-host-url.i.posthog.com
+VITE_API_URL=http://127.0.0.1:8000
 
-# Start the development server
+# Start dev server
 npm run dev
+```
 
-The frontend will run on http://localhost:5173.
+Frontend runs on: **[http://localhost:5173](http://localhost:5173)**
 
-🔬 How the A/B Test Works
-User Assignment: When a user visits the site, the React application randomly assigns them to one of two groups with a 50/50 split: text or visual.
+---
 
-Forcing a Variant: During development, a specific variant can be forced using a URL query parameter (e.g., /?group=visual).
+## 🔬 How the A/B Test Works
 
-Data Collection: A quiz_submitted event is sent to PostHog containing the user's final score and assigned group, allowing for direct comparison of the outcome metric.
+1. **User Assignment:**
 
-📈 Viewing Analytics
-All A/B test analysis is conducted within the PostHog platform.
+   * On first visit, users are randomly assigned to **text** or **visual** groups (50/50 split).
 
-Live Events: The "Activity" tab in PostHog shows events as they arrive in real-time for debugging and monitoring.
+2. **Forcing Variants (Dev Mode):**
 
-A/B Test Results: The "Dashboards" and "Experiments" tabs provide a complete dashboard comparing the average quiz scores, statistical significance, and other metrics for the two groups.
+   * Append a query parameter to URL:
 
-🌐 Deployment
-This application is deployed on Vercel, configured to build both the frontend (/frontend) and backend (/backend) from this single repository.
+     * `/ ?group=visual` → forces visual version
+     * `/ ?group=text` → forces text version
 
-The following environment variables are required for the live deployment:
+3. **Data Collection:**
 
-VITE_POSTHOG_KEY: The public API key for the PostHog project.
+   * On quiz submission, a `quiz_submitted` event is sent to **PostHog** with:
 
-VITE_POSTHOG_HOST: The host URL for the PostHog instance.
+     * Assigned group
+     * Final score
 
-VITE_API_URL: The production URL of the deployed Vercel application.
+---
 
-Any push to the main branch automatically triggers a new deployment.
+## 📈 Analytics & Results
+
+* **Live Events:** Viewable in PostHog under **Activity** (for debugging & monitoring).
+* **Experiment Dashboard:**
+
+  * Average quiz scores by group
+  * Statistical significance testing
+  * Engagement metrics
+
+---
+
+## 🌐 Deployment
+
+Deployed with **Vercel** (monorepo setup: `/frontend` + `/backend`).
+
+### Required Environment Variables
+
+* `VITE_POSTHOG_KEY` → Public API key for PostHog
+* `VITE_POSTHOG_HOST` → Host URL for PostHog instance
+* `VITE_API_URL` → Production API endpoint (backend)
+
+> Any push to the `main` branch triggers an **automatic deployment**.
+
+---
+
+## 📚 References
+
+* [Newton’s Laws of Motion](https://en.wikipedia.org/wiki/Newton%27s_laws_of_motion)
+* [PostHog Documentation](https://posthog.com/docs)
+* [FastAPI Documentation](https://fastapi.tiangolo.com/)
+
